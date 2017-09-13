@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ivMovieImage"
+        android:id="@+id/ivMovieImageLand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -20,10 +20,12 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivMovieImage"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
         android:ems="10"
-        android:paddingLeft="20dp"
         android:textSize="20dp"
         tools:text="Annabelle: Creation" />
 

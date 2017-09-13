@@ -1,6 +1,7 @@
 package com.codepath.flickster.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +40,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         //get the data item for position
         Movie movie = getItem(position);
 
+        String image;
+        int orientation = getContext().getResources().getConfiguration().orientation;
+
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
+
 
         if (convertView == null) {
             // If there's no view to re-use, inflate a brand new view for row
@@ -49,9 +54,16 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             convertView = inflater.inflate(R.layout.item_movie, parent, false);
             viewHolder.title = (TextView) convertView.findViewById(tvTitle);
             viewHolder.overview = (TextView) convertView.findViewById(tvOverview);
-            viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImage);
 
-            viewHolder.poster.setImageResource(0);
+                viewHolder.poster.setImageResource(0);
+            } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImageLand);
+
+                viewHolder.poster.setImageResource(0);
+            }
+
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
@@ -63,7 +75,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.title.setText(movie.getOriginalTitle());
         viewHolder.overview.setText(movie.getOverview());
 
-        Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.poster);
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.poster);
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Picasso.with(getContext()).load(movie.getBackdropPath()).into(viewHolder.poster);
+        }
+
         //return the view
         return convertView;
     }
