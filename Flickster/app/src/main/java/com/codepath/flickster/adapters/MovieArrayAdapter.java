@@ -1,5 +1,7 @@
 package com.codepath.flickster.adapters;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
@@ -12,8 +14,6 @@ import android.widget.TextView;
 import com.codepath.flickster.R;
 import com.codepath.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import static com.codepath.flickster.R.id.tvOverview;
 import static com.codepath.flickster.R.id.tvTitle;
@@ -46,7 +46,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
 
-
         if (convertView == null) {
             // If there's no view to re-use, inflate a brand new view for row
             viewHolder = new ViewHolder();
@@ -76,12 +75,15 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.overview.setText(movie.getOverview());
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.poster);
+            Picasso.with(getContext()).load(movie.getPosterPath()).resize(600, 800).centerCrop().placeholder(R.drawable.placeholder).into
+                (viewHolder
+                .poster);
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Picasso.with(getContext()).load(movie.getBackdropPath()).into(viewHolder.poster);
+            Picasso.with(getContext()).load(movie.getBackdropPath()).resize(900, 600).centerCrop().placeholder(R.drawable.placeholder)
+                .into
+                (viewHolder.poster);
         }
 
-        //return the view
         return convertView;
     }
 }
