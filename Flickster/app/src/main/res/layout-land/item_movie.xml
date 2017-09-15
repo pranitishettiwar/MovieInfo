@@ -3,8 +3,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/ivMovieImageLand"
@@ -19,24 +19,24 @@
         tools:src="@mipmap/ic_launcher"/>
 
     <TextView
-        android:textColor="@color/colorTextTitle"
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ivMovieImageLand"
+        android:layout_toRightOf="@+id/ivMovieImageLand"
+        android:paddingLeft="20dp"
+        android:textColor="@color/colorTextTitle"
         android:textSize="20dp"
         tools:text="Annabelle: Creation"/>
 
     <TextView
-        android:textColor="@color/colorTextOverview"
         android:id="@+id/tvOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvTitle"
-        android:layout_alignStart="@+id/tvTitle"
         android:layout_below="@+id/tvTitle"
+        android:layout_toEndOf="@+id/ivMovieImageLand"
+        android:layout_toRightOf="@+id/ivMovieImageLand"
         android:paddingLeft="20dp"
+        android:textColor="@color/colorTextOverview"
         tools:text="Several years after the tragic death of their little girl, a dollmaker and his wife welcome a nun and several girls from a shuttered orphanage into their home, soon becoming the target of the dollmaker's possessed creation, Annabelle."/>
 </RelativeLayout>
