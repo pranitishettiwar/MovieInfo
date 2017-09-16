@@ -1,10 +1,13 @@
-package com.codepath.flickster;
+package com.codepath.flickster.activity;
+
+import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.codepath.flickster.R;
 import com.codepath.flickster.adapters.MovieArrayAdapter;
 import com.codepath.flickster.models.Movie;
 import com.loopj.android.http.AsyncHttpClient;
@@ -13,8 +16,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
