@@ -11,8 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="13dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         tools:src="@mipmap/ic_launcher"/>
 </RelativeLayout>

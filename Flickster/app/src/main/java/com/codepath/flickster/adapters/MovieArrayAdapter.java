@@ -93,7 +93,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 Picasso.with(getContext()).load(movie.getBackdropPath()).fit().centerCrop().placeholder(R.drawable.placeholder)
                     .transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
             } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                Picasso.with(getContext()).load(movie.getBackdropPath()).resize(1800, 900).centerCrop().placeholder(R.drawable
+                Picasso.with(getContext()).load(movie.getBackdropPath()).resize(1600, 800).centerCrop().placeholder(R.drawable
                     .placeholder).transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
             }
         }
