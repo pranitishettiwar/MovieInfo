@@ -15,6 +15,8 @@ import com.codepath.flickster.R;
 import com.codepath.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 import static com.codepath.flickster.R.id.tvOverview;
 import static com.codepath.flickster.R.id.tvTitle;
 
@@ -75,13 +77,11 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.overview.setText(movie.getOverview());
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Picasso.with(getContext()).load(movie.getPosterPath()).resize(600, 800).centerCrop().placeholder(R.drawable.placeholder).into
-                (viewHolder
-                .poster);
+            Picasso.with(getContext()).load(movie.getPosterPath()).resize(600, 800).centerCrop().placeholder(R.drawable
+                .placeholder).transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Picasso.with(getContext()).load(movie.getBackdropPath()).resize(900, 600).centerCrop().placeholder(R.drawable.placeholder)
-                .into
-                (viewHolder.poster);
+            Picasso.with(getContext()).load(movie.getBackdropPath()).resize(900, 600).centerCrop().placeholder(R.drawable
+                .placeholder).transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
         }
 
         return convertView;
