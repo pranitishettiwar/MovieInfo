@@ -26,6 +26,10 @@ import static com.codepath.flickster.R.id.tvTitle;
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
+    public enum MovieType {
+        POPULAR, NONPOPULAR
+    }
+
     // View lookup cache
     private static class ViewHolder {
         TextView title;
@@ -37,12 +41,13 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         super(context, android.R.layout.simple_list_item_1, movies);
     }
 
+    // Get a View that displays the data at the specified position in the data set.
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //get the data item for position
         Movie movie = getItem(position);
 
-        String image;
+        int type = getItemViewType(position);
         int orientation = getContext().getResources().getConfiguration().orientation;
 
         // Check if an existing view is being reused, otherwise inflate the view
@@ -50,19 +55,15 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         if (convertView == null) {
             // If there's no view to re-use, inflate a brand new view for row
+
+            convertView = getInflatedLayoutForType(type, orientation, parent);
             viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_movie, parent, false);
             viewHolder.title = (TextView) convertView.findViewById(tvTitle);
             viewHolder.overview = (TextView) convertView.findViewById(tvOverview);
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-
-                viewHolder.poster.setImageResource(0);
             } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImageLand);
-
-                viewHolder.poster.setImageResource(0);
             }
 
             // Cache the viewHolder object inside the fresh view
@@ -73,17 +74,60 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         }
 
         //populate data
-        viewHolder.title.setText(movie.getOriginalTitle());
-        viewHolder.overview.setText(movie.getOverview());
-
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Picasso.with(getContext()).load(movie.getPosterPath()).resize(600, 800).centerCrop().placeholder(R.drawable
-                .placeholder).transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Picasso.with(getContext()).load(movie.getBackdropPath()).resize(900, 600).centerCrop().placeholder(R.drawable
-                .placeholder).transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
+        if (viewHolder.title != null) {
+            viewHolder.title.setText(movie.getOriginalTitle());
         }
 
+        if (viewHolder.overview != null) {
+            viewHolder.overview.setText(movie.getOverview());
+        }
+
+        if (viewHolder.poster != null) {
+            viewHolder.poster.setImageResource(0);
+
+            if (orientation == Configuration.ORIENTATION_PORTRAIT && type == MovieType.NONPOPULAR.ordinal()) {
+                Picasso.with(getContext()).load(movie.getPosterPath()).fit().centerCrop().placeholder(R.drawable.placeholder)
+                    .transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
+
+            } else if (orientation == Configuration.ORIENTATION_PORTRAIT && type == MovieType.POPULAR.ordinal()) {
+                Picasso.with(getContext()).load(movie.getBackdropPath()).fit().centerCrop().placeholder(R.drawable.placeholder)
+                    .transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
+            } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                Picasso.with(getContext()).load(movie.getBackdropPath()).resize(1800, 900).centerCrop().placeholder(R.drawable
+                    .placeholder).transform(new RoundedCornersTransformation(15, 15)).into(viewHolder.poster);
+            }
+        }
         return convertView;
+    }
+
+    // Returns the number of types of Views that will be created by getView(int, View, ViewGroup)
+    @Override
+    public int getViewTypeCount() {
+        return MovieType.values().length;
+    }
+
+    // Get the type of View that will be created by getView(int, View, ViewGroup)
+    // for the specified item.
+    @Override
+    public int getItemViewType(int position) {
+        Movie movie = getItem(position);
+        if (movie.getVoteAverage() > 5)
+            return MovieType.POPULAR.ordinal();
+        else
+            return MovieType.NONPOPULAR.ordinal();
+    }
+
+    // Given the item type, responsible for returning the correct inflated XML layout file
+    private View getInflatedLayoutForType(int type, int orientation, ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        if (type == MovieType.POPULAR.ordinal() && orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return inflater.inflate(R.layout.item_popular_movie, parent, false);
+        } else if (type == MovieType.NONPOPULAR.ordinal() && orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return inflater.inflate(R.layout.item_movie, parent, false);
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return inflater.inflate(R.layout.item_movie, parent, false);
+        } else {
+            return null;
+        }
     }
 }

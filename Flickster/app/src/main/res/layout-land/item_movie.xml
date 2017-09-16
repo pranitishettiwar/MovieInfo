@@ -25,6 +25,7 @@
         android:layout_toEndOf="@+id/ivMovieImageLand"
         android:layout_toRightOf="@+id/ivMovieImageLand"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
         android:textColor="@color/colorTextTitle"
         android:textSize="20dp"
         tools:text="Annabelle: Creation"/>

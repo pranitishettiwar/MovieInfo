@@ -2,8 +2,8 @@ package com.codepath.flickster.activity;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MovieActivity extends AppCompatActivity {
+public class MovieActivity extends Activity {
 
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
