@@ -39,7 +39,7 @@ public class MovieActivity extends Activity {
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(url, new JsonHttpResponseHandler(){
+        client.get(url, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray movieJsonResults = null;
