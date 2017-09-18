@@ -16,12 +16,12 @@
 
     <Button
         android:id="@+id/buttonDetailPlay"
-        android:layout_width="100dp"
+        android:layout_width="40dp"
         android:layout_height="24dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:background="@drawable/yt_logo_rgb"/>
+        android:background="@drawable/youtube_logo"/>
 
     <TextView
         android:id="@+id/tvMovieDetailTitle"
