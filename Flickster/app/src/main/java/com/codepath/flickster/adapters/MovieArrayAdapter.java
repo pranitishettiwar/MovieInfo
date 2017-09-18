@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.flickster.R;
+import com.codepath.flickster.activity.MovieDetailActivity;
 import com.codepath.flickster.activity.TrailerActivity;
 import com.codepath.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
@@ -21,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 import static com.codepath.flickster.R.id.buttonPlay;
+import static com.codepath.flickster.R.id.ivMovieImage;
 import static com.codepath.flickster.R.id.tvOverview;
 import static com.codepath.flickster.R.id.tvTitle;
 
@@ -40,6 +42,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         TextView overview;
         ImageView poster;
         Button buttonPlay;
+        ImageView ivMovieImage;
     }
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
@@ -66,9 +69,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder.title = (TextView) convertView.findViewById(tvTitle);
             viewHolder.overview = (TextView) convertView.findViewById(tvOverview);
             viewHolder.buttonPlay = (Button) convertView.findViewById(buttonPlay);
+            viewHolder.ivMovieImage = (ImageView) convertView.findViewById(ivMovieImage);
 
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+                viewHolder.poster = (ImageView) convertView.findViewById(ivMovieImage);
             } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.ivMovieImageLand);
             }
@@ -116,6 +120,25 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             });
 
         }
+
+        if (viewHolder.ivMovieImage != null) {
+            viewHolder.ivMovieImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Double movieRate = movie.getVoteAverage() / 2;
+
+                    Intent intent = new Intent(view.getContext(), MovieDetailActivity.class);
+                    intent.putExtra("movieTitle", movie.getOriginalTitle());
+                    intent.putExtra("movieOverview", movie.getOverview());
+                    intent.putExtra("movieRate", movieRate);
+                    intent.putExtra("moviePoster", movie.getPosterPath());
+                    view.getContext().startActivity(intent);
+                }
+            });
+
+        }
+
         return convertView;
     }
 

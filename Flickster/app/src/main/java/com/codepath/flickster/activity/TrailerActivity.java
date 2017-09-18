@@ -36,7 +36,6 @@ public class TrailerActivity extends YouTubeBaseActivity {
         setContentView(R.layout.activity_trailer);
 
         Integer movieId = getIntent().getIntExtra("movieId", 0);
-        Log.d("DEBUG: Movie ID", Integer.toString(movieId));
 
         trailers = new ArrayList<>();
         getTrailerKey(movieId);
@@ -50,7 +49,6 @@ public class TrailerActivity extends YouTubeBaseActivity {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
 
-                Log.d("DEBUG: Trailer Key", trailerKey);
                 // do any work here to cue video, play video, etc.
                 youTubePlayer.loadVideo(trailerKey);
             }
@@ -86,7 +84,7 @@ public class TrailerActivity extends YouTubeBaseActivity {
                     trailerJsonResults = response.getJSONArray("results");
                     trailers.addAll(Trailer.fromJSONArray(trailerJsonResults));
                     trailerKey = trailers.get(0).getKey();
-                    Log.d("DEBUG", trailerJsonResults.toString());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
