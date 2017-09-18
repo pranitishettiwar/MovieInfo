@@ -50,7 +50,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //get the data item for position
-        Movie movie = getItem(position);
+        final Movie movie = getItem(position);
 
         int type = getItemViewType(position);
         int orientation = getContext().getResources().getConfiguration().orientation;
@@ -109,8 +109,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder.buttonPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent Intent = new Intent(view.getContext(), TrailerActivity.class);
-                    view.getContext().startActivity(Intent);
+                    Intent intent = new Intent(view.getContext(), TrailerActivity.class);
+                    intent.putExtra("movieId", movie.getId());
+                    view.getContext().startActivity(intent);
                 }
             });
 
@@ -148,4 +149,5 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             return null;
         }
     }
+
 }
