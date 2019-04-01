@@ -6,13 +6,6 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:id="@+id/layoutPoster">
-
     <ImageView
         android:id="@+id/ivMovieImageLand"
         android:layout_width="wrap_content"
@@ -25,36 +18,16 @@
         android:layout_marginTop="13dp"
         tools:src="@mipmap/ic_launcher"/>
 
-        <Button
-            android:id="@+id/buttonPlay"
-            android:layout_width="40dp"
-            android:layout_height="24dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/youtube_logo"/>
-    </RelativeLayout>
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/layoutPoster"
-        android:layout_toRightOf="@+id/layoutPoster"
+        android:layout_toEndOf="@+id/ivMovieImageLand"
+        android:layout_toRightOf="@+id/ivMovieImageLand"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:layout_marginTop="13dp"
         android:textColor="@color/colorTextTitle"
-        android:textSize="20dp"
+        android:textSize="20sp"
         tools:text="Annabelle: Creation"/>
-
-    <TextView
-        android:id="@+id/tvOverview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_toEndOf="@+id/layoutPoster"
-        android:layout_toRightOf="@+id/layoutPoster"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="@color/colorTextOverview"
-        tools:text="Several years after the tragic death of their little girl, a dollmaker and his wife welcome a nun and several girls from a shuttered orphanage into their home, soon becoming the target of the dollmaker's possessed creation, Annabelle."/>
 </RelativeLayout>

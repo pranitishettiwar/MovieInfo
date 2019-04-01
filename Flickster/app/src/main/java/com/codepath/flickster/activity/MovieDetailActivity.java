@@ -2,55 +2,74 @@ package com.codepath.flickster.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.codepath.flickster.R;
+import com.codepath.flickster.util.Cache;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
-import static com.codepath.flickster.R.id.ivMovieDetailPoster;
-import static com.codepath.flickster.R.id.rateMovieDetail;
-import static com.codepath.flickster.R.id.tvMovieDetailOverview;
-import static com.codepath.flickster.R.id.tvMovieDetailTitle;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-/**
- * Created by praniti on 9/16/17.
- */
+import cz.msebera.android.httpclient.Header;
 
 public class MovieDetailActivity extends Activity {
+
+    TextView title, index;
+    ImageView poster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        TextView title = (TextView) findViewById(tvMovieDetailTitle);
-        TextView overview = (TextView) findViewById(tvMovieDetailOverview);
-        ImageView poster = (ImageView) findViewById(ivMovieDetailPoster);
-        RatingBar rate = (RatingBar) findViewById(rateMovieDetail);
+        title = (TextView) findViewById(R.id.tvMovieDetailTitle);
+        poster = (ImageView) findViewById(R.id.ivMovieDetailPoster);
+        index = (TextView) findViewById(R.id.tvMovieDetailIndex);
 
-        String movieTitle = getIntent().getStringExtra("movieTitle");
-        String movieOverview = getIntent().getStringExtra("movieOverview");
-        String moviePoster = getIntent().getStringExtra("moviePoster");
-        Double movieRate = getIntent().getDoubleExtra("movieRate", 0);
+        final int movieId = getIntent().getIntExtra("id", 0);
 
-        title.setText(movieTitle);
-        overview.setText(movieOverview);
-        rate.setNumStars(5);
-        rate.setRating(movieRate.floatValue());
+        String url = "https://us-central1-modern-venture-600.cloudfunctions.net/api/movies/" + movieId;
 
-        if (poster != null) {
-            poster.setImageResource(0);
+        if (Cache.getInstance().get(movieId) != null) {
+            Log.d("DEBUG", "Populating Movie details from cache");
+            populateMovieDetails(Cache.getInstance().get(movieId));
+        } else {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(url, new TextHttpResponseHandler() {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                }
 
-            Picasso.with(this).load(moviePoster).resize(1000, 1200).into(poster);
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
+                    try {
+                        JSONObject movieDetail = new JSONObject(responseString);
+                        populateMovieDetails(movieDetail);
+
+                        Log.d("DEBUG", "Populating Movie details from API endpoint");
+
+                        Cache.getInstance().put(movieId, movieDetail);
+                    } catch (JSONException e) {
+                        Log.d("DEBUG", "JSON Exception" + e);
+                    }
+                }
+            });
         }
     }
 
-    public void onSubmit(View v) {
-        // closes the activity and returns to first screen
-        this.finish();
+    private void populateMovieDetails(JSONObject movieDetail) {
+        String movieTitle = movieDetail.optString("title");
+        title.setText(movieTitle);
+        index.setText(movieDetail.optString("index"));
+        if (poster != null) {
+            poster.setImageResource(0);
+            Picasso.with(getApplicationContext()).load(movieDetail.optString("image")).resize(1000, 1200).into(poster);
+        }
     }
 }
