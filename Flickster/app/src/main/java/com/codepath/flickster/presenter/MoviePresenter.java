@@ -16,8 +16,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class MoviePresenter implements MovieContract.Presenter {
 
-    MovieContract.View mView;
-    ArrayList<Movie> movies;
+    private MovieContract.View mView;
+    private ArrayList<Movie> movies;
+    private static final String BASE_URL = "https://us-central1-modern-venture-600.cloudfunctions.net/api/movies";
 
     public MoviePresenter(MovieContract.View mView) {
         this.mView = mView;
@@ -32,9 +33,8 @@ public class MoviePresenter implements MovieContract.Presenter {
     @Override
     public void loadMovies() {
 
-        String url = "https://us-central1-modern-venture-600.cloudfunctions.net/api/movies";
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new TextHttpResponseHandler() {
+        client.get(BASE_URL, new TextHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
