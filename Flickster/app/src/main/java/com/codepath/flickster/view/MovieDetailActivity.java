@@ -1,4 +1,4 @@
-package com.codepath.flickster.activity;
+package com.codepath.flickster.view;
 
 import android.app.Activity;
 import android.os.Bundle;

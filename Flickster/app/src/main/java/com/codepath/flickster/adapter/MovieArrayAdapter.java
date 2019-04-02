@@ -1,4 +1,4 @@
-package com.codepath.flickster.adapters;
+package com.codepath.flickster.adapter;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.flickster.R;
-import com.codepath.flickster.activity.MovieDetailActivity;
-import com.codepath.flickster.models.Movie;
+import com.codepath.flickster.view.MovieDetailActivity;
+import com.codepath.flickster.model.Movie;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;

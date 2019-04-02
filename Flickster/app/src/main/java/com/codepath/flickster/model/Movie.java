@@ -1,4 +1,4 @@
-package com.codepath.flickster.models;
+package com.codepath.flickster.model;
 
 import java.util.ArrayList;
 

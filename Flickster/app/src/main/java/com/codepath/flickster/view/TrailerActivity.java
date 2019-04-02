@@ -1,4 +1,4 @@
-package com.codepath.flickster.activity;
+package com.codepath.flickster.view;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.codepath.flickster.R;
-import com.codepath.flickster.models.Trailer;
+import com.codepath.flickster.model.Trailer;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;

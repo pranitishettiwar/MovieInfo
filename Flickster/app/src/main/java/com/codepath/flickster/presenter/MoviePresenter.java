@@ -1,15 +1,11 @@
-package com.codepath.flickster.activity;
+package com.codepath.flickster.presenter;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
 
-import com.codepath.flickster.R;
-import com.codepath.flickster.adapters.MovieArrayAdapter;
-import com.codepath.flickster.models.Movie;
+import com.codepath.flickster.contract.MovieContract;
+import com.codepath.flickster.model.Movie;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -18,21 +14,23 @@ import org.json.JSONException;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MovieActivity extends Activity {
+public class MoviePresenter implements MovieContract.Presenter {
 
+    MovieContract.View mView;
     ArrayList<Movie> movies;
-    MovieArrayAdapter movieAdapter;
-    ListView lvItems;
+
+    public MoviePresenter(MovieContract.View mView) {
+        this.mView = mView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie);
-
-        lvItems = (ListView) findViewById(R.id.lvMovies);
+    public void start() {
+        mView.init();
         movies = new ArrayList<>();
-        movieAdapter = new MovieArrayAdapter(this, movies);
-        lvItems.setAdapter(movieAdapter);
+    }
+
+    @Override
+    public void loadMovies() {
 
         String url = "https://us-central1-modern-venture-600.cloudfunctions.net/api/movies";
         AsyncHttpClient client = new AsyncHttpClient();
@@ -40,6 +38,7 @@ public class MovieActivity extends Activity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                mView.showError("Error Occured");
             }
 
             @Override
@@ -47,11 +46,12 @@ public class MovieActivity extends Activity {
                 try {
                     JSONArray movieJsonResults = new JSONArray(responseString);
                     movies.addAll(Movie.fromJSONArray(movieJsonResults));
-                    movieAdapter.notifyDataSetChanged();
+                    mView.loadDataInList(movies);
                 } catch (JSONException e) {
                     Log.d("DEBUG", "JSON Exception" + e);
                 }
             }
         });
+
     }
 }

@@ -21,7 +21,6 @@
         android:layout_below="@+id/ivMovieDetailPoster"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Annabelle: Creation"
         android:textColor="@color/colorTextTitle"
         android:textSize="25dp"/>
 
@@ -32,7 +31,6 @@
         android:layout_below="@+id/tvMovieDetailTitle"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="12"
         android:textColor="@color/colorTextTitle"
         android:textSize="15dp"/>
 
